@@ -1,4 +1,4 @@
-package qa;
+package qa.model;
 
 public class ContactData {
     private final String name;
