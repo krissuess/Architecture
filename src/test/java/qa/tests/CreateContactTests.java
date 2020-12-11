@@ -1,8 +1,6 @@
 package qa.tests;
 
 import org.testng.annotations.*;
-import org.openqa.selenium.*;
-import qa.appmanager.ContactHelper;
 import qa.model.ContactData;
 
 public class CreateContactTests extends TestBase {
