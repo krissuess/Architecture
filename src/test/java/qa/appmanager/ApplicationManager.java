@@ -1,6 +1,7 @@
 package qa.appmanager;
 
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
@@ -24,6 +25,7 @@ public class ApplicationManager {
         sessionHelper = new SessionHelper(wd);
         contactHelper = new ContactHelper(wd);
         sessionHelper.login("admin", "secret");
+        wd.findElement(By.xpath("//input[@value='Login']")).click();
     }
 
     public void stop() {
