@@ -7,7 +7,7 @@ import qa.appmanager.ApplicationManager;
 
 public class TestBase {
 
-    ApplicationManager app = new ApplicationManager(BrowserType.FIREFOX);
+    ApplicationManager app = new ApplicationManager(BrowserType.CHROME);
 
 
     @BeforeMethod(alwaysRun = true)
