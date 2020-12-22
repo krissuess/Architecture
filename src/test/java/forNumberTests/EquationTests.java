@@ -1,6 +1,6 @@
-package forEquationTests;
+package forNumberTests;
 
-import equationTests.Equation;
+import numberTests.Equation;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 

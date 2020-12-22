@@ -1,4 +1,4 @@
-package equationTests;
+package numberTests;
 
 public class Equation {
     private double a;
