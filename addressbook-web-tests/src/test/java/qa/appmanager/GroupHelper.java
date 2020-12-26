@@ -4,9 +4,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import qa.model.GroupData;
+import qa.model.Groups;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class GroupHelper extends HelperBase {
 
@@ -19,9 +19,6 @@ public class GroupHelper extends HelperBase {
         click(By.xpath("(//input[@name='delete'])[2]"));
     }
 
-    public void selectGroup(int index) {
-        wd.findElements(By.name("selected[]")).get(index).click();
-    }
 
     public void initGroupCreation() {
         click(By.name("new"));
@@ -64,16 +61,16 @@ public class GroupHelper extends HelperBase {
         return wd.findElements(By.name("selected[]")).size();
     }
 
-    public void modify(int index, GroupData group) {
-        selectGroup(index);
+    public void modify(GroupData group) {
+        selectGroupById(group.getId());
         initGroupModification();
         fillGroupForm(group);
         submitGroupModification();
         returnToGroupPage();
     }
 
-    public List<GroupData> list() {
-        List<GroupData> groups = new ArrayList<>();
+    public Groups all() {
+        Groups groups = new Groups();
         List<WebElement> elements = wd.findElements(By.cssSelector("span.group"));
         for (WebElement element: elements){
             String name = element.getText();
@@ -83,9 +80,13 @@ public class GroupHelper extends HelperBase {
         return groups;
     }
 
-    public void delete(int index) {
-        selectGroup(index);
+    public void delete(GroupData group) {
+        selectGroupById(group.getId());
         deleteSelectedGroups();
         returnToGroupPage();
+    }
+
+    private void selectGroupById(int id) {
+        wd.findElement(By.cssSelector("input[value='" + id + "']")).click();
     }
 }

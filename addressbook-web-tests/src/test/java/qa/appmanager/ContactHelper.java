@@ -4,9 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import qa.model.ContactData;
-import qa.model.GroupData;
-
-import java.util.ArrayList;
+import qa.model.Contacts;
 import java.util.List;
 
 public class ContactHelper extends HelperBase {
@@ -33,10 +31,8 @@ public class ContactHelper extends HelperBase {
         type(By.name("mobile"), contactData.getMobile());
     }
 
-
-
-    public List<ContactData> getContactList() {
-        List<ContactData> contacts = new ArrayList<>();
+    public Contacts all() {
+        Contacts contacts = new Contacts();
         List<WebElement> elements = wd.findElements(By.cssSelector("tr[name='entry']"));
         for (WebElement element: elements){
             String lastName = element.findElements(By.tagName("td")).get(1).getText();

@@ -3,20 +3,19 @@ package qa.tests;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import qa.model.ContactData;
-import qa.model.GroupData;
+import qa.model.Contacts;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class ContactModificationTests extends TestBase {
     @Test
     public void testContactModification() {
-        if (! app.getContactHelper().isThereAContact()) {
-            app.getContactHelper().createContactToModifyOrEdit(new ContactData("Kris", "Vasilyevsky Island", "12345"));
+        if (app.getContactHelper().all().size() == 0) {
+            app.getContactHelper().createContactToModifyOrEdit(new ContactData("Var", "Krisss", "Vasilyevsky Island", "12345"));
         };
-        List<ContactData> before = app.getContactHelper().getContactList();
-
+        Contacts before = app.getContactHelper().all();
+        ContactData e = before.iterator().next();
         Comparator<ContactData> compareLastName = Comparator.comparing(ContactData::getLastName);
         Comparator<ContactData> compareName = Comparator.comparing(ContactData::getName);
         app.getContactHelper().initContactModification();
@@ -26,14 +25,11 @@ public class ContactModificationTests extends TestBase {
         app.getContactHelper().submitContactModification();
         app.wd.get("http://localhost:8080/addressbook/");
 
-        List<ContactData> after = app.getContactHelper().getContactList();
-        after.sort(compareLastName.thenComparing(compareName));
-        Assert.assertEquals(before.size(), after.size());
-        before.remove(0);
-        before.add(a);
-        before.sort(compareLastName.thenComparing(compareLastName));
+        Contacts after = app.getContactHelper().all();
 
-        Assert.assertEquals(before, after);
+        Assert.assertEquals(before.size(), after.size());
+
+        Assert.assertEquals(after, before.without(e).withAdded(a));
     }
 
 }
