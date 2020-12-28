@@ -1,11 +1,13 @@
 package qa.tests;
 
-import org.testng.Assert;
 import org.testng.annotations.Test;
 import qa.model.ContactData;
 import qa.model.Contacts;
 
 import java.util.concurrent.TimeUnit;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.CoreMatchers.equalTo;
 
 public class ContactDeletionTests extends TestBase {
     @Test
@@ -23,7 +25,7 @@ public class ContactDeletionTests extends TestBase {
         app.wd.switchTo().alert().accept();
 
         Contacts after = app.getContactHelper().all();
-        Assert.assertEquals(before.size(), after.size() + 1);
-        Assert.assertEquals(after, before.without(a));
+        assertThat(before.size(), equalTo(after.size() + 1));
+        assertThat(after, equalTo(before.without(a)));
     }
 }

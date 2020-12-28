@@ -1,12 +1,13 @@
 package qa.tests;
 
-import org.testng.Assert;
 import org.testng.annotations.Test;
 import qa.model.ContactData;
 import qa.model.Contacts;
 
 import java.util.Comparator;
-import java.util.List;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.CoreMatchers.equalTo;
 
 public class ContactModificationTests extends TestBase {
     @Test
@@ -26,10 +27,8 @@ public class ContactModificationTests extends TestBase {
         app.wd.get("http://localhost:8080/addressbook/");
 
         Contacts after = app.getContactHelper().all();
-
-        Assert.assertEquals(before.size(), after.size());
-
-        Assert.assertEquals(after, before.without(e).withAdded(a));
+        assertThat(before.size(), equalTo(after.size()));
+        assertThat(after, equalTo(before.without(e).withAdded(a)));
     }
 
 }

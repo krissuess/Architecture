@@ -4,7 +4,9 @@ import org.testng.Assert;
 import org.testng.annotations.*;
 import qa.model.GroupData;
 import qa.model.Groups;
-import java.util.Set;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.CoreMatchers.equalTo;
 
 public class GroupCreationTests extends TestBase {
 
@@ -16,9 +18,9 @@ public class GroupCreationTests extends TestBase {
         app.goTo().groupPage();
         app.group().create(group);
         Groups after = app.group().all();
-        Assert.assertEquals(after.size(), before.size() +1);
+        assertThat(after.size(), equalTo(before.size() +1));
         group.withId(after.stream().mapToInt(x->x.getId()).max().getAsInt());
-        Assert.assertEquals(after, before.withAdded(group));
+        assertThat(after, equalTo(before.withAdded(group)));
     }
 }
 
