@@ -4,8 +4,6 @@ import org.testng.annotations.Test;
 import qa.model.ContactData;
 import qa.model.Contacts;
 
-import java.util.Comparator;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
 
@@ -14,11 +12,9 @@ public class ContactModificationTests extends TestBase {
     public void testContactModification() {
         if (app.getContactHelper().all().size() == 0) {
             app.getContactHelper().createContactToModifyOrEdit(new ContactData("Var", "Krisss", "Vasilyevsky Island", "12345"));
-        };
+        }
         Contacts before = app.getContactHelper().all();
         ContactData e = before.iterator().next();
-        Comparator<ContactData> compareLastName = Comparator.comparing(ContactData::getLastName);
-        Comparator<ContactData> compareName = Comparator.comparing(ContactData::getName);
         app.getContactHelper().initContactModification();
 
         ContactData a = new ContactData("QQQ", "AAA", "8902333", "");
@@ -30,5 +26,4 @@ public class ContactModificationTests extends TestBase {
         assertThat(before.size(), equalTo(after.size()));
         assertThat(after, equalTo(before.without(e).withAdded(a)));
     }
-
 }

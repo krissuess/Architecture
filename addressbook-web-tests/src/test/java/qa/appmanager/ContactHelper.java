@@ -21,6 +21,8 @@ public class ContactHelper extends HelperBase {
         type(By.name("firstname") , contactData.getName());
         type(By.name("address"), contactData.getAddress());
         type(By.name("mobile"), contactData.getMobile());
+        type(By.name("home"), contactData.getHomePhone());
+        type(By.name("work"), contactData.getWorkPhone());
         submitContactCreation();
     }
 
@@ -35,9 +37,13 @@ public class ContactHelper extends HelperBase {
         Contacts contacts = new Contacts();
         List<WebElement> elements = wd.findElements(By.cssSelector("tr[name='entry']"));
         for (WebElement element: elements){
-            String lastName = element.findElements(By.tagName("td")).get(1).getText();
-            String name = element.findElements(By.tagName("td")).get(2).getText();
-            ContactData contactData = new ContactData(lastName ,name, "", "");
+            List<WebElement> cells = element.findElements(By.tagName("td"));
+            String lastName = cells.get(1).getText();
+            String name = cells.get(2).getText();
+            String allPhones = cells.get(5).getText();
+            int id = Integer.parseInt(element.findElement(By.cssSelector(".center input")).getAttribute("id"));
+            ContactData contactData = new ContactData().withId(id).withName(name).withLastName(lastName)
+                    .withAddress("sdsds").withAllPhones(allPhones);
             contacts.add(contactData);
         }
         return contacts;
@@ -75,4 +81,24 @@ public class ContactHelper extends HelperBase {
     public boolean isThereAContact() {
         return isElementPresent(By.name("selected[]"));
     }
+
+    public ContactData infoFromEditForm(ContactData contact) {
+        initContactModificationById(contact.getId());
+        String firstName = wd.findElement(By.name("firstname")).getAttribute("value");
+        String lastName = wd.findElement(By.name("lastname")).getAttribute("value");
+        String home = wd.findElement(By.name("home")).getAttribute("value");
+        String mobile = wd.findElement(By.name("mobile")).getAttribute("value");
+        String work = wd.findElement(By.name("work")).getAttribute("value");
+        wd.navigate().back();
+        return new ContactData().withId(contact.getId()).withName(firstName).withLastName(lastName).
+                withMobile(mobile).withHomePhone(home).withWorkPhone(work);
+
+    }
+
+    private void initContactModificationById(int id) {
+        wd.findElement(By.cssSelector(String.format("a[href='edit.php?id=%s']", id))).click();
+    }
+
+
+
 }
