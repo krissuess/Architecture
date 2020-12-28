@@ -8,6 +8,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
 
 public class ContactModificationTests extends TestBase {
+
     @Test
     public void testContactModification() {
         if (app.getContactHelper().all().size() == 0) {
