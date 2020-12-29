@@ -4,6 +4,7 @@ import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.ParameterException;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import qa.model.ContactData;
 import qa.model.GroupData;
 
@@ -52,7 +53,7 @@ public class ContactDataGenerator {
     }
 
     private void saveAsJson(List<ContactData> contacts, File file) throws IOException {
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
         String json = gson.toJson(contacts);
         Writer writer = new FileWriter(file);
         writer.write(json);

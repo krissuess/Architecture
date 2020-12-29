@@ -1,19 +1,31 @@
 package qa.model;
 
+import com.google.gson.annotations.Expose;
+
 import java.io.File;
 import java.util.Objects;
 
 public class ContactData {
     private int id;
+    @Expose
     private String lastName;
+    @Expose
     private String name;
+    @Expose
     private String address;
+    @Expose
     private String mobile;
+    @Expose
     private String homePhone;
+    @Expose
     private String workPhone;
+    @Expose
     private String allPhones;
+    @Expose
     private String email1;
+    @Expose
     private String email2;
+    @Expose
     private String email3;
     private String allEmail;
     private File photo;
